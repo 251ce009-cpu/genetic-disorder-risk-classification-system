@@ -8,7 +8,10 @@ import os
 app = Flask(__name__)
 CORS(app)
 
-model = joblib.load("genetic_disorder_model.pkl")
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+MODEL_PATH = os.path.join(BASE_DIR, "genetic_disorder_model.pkl")
+
+model = joblib.load(MODEL_PATH)
 feature_columns = model.feature_names_in_.tolist()
 
 @app.route("/", methods=["GET"])
