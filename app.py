@@ -108,5 +108,27 @@ st.caption(
     "Evaluation metrics are calculated using the test dataset."
 )
 
+# EDA VISUALIZATIONS
+
+st.divider()
+st.header("📊 Exploratory Data Analysis")
+
+st.subheader("1. Genetic Disorder Distribution")
+
+st.image(
+    "disorder_distribution.png",
+    caption="Distribution of Genetic Disorder Categories",
+    use_container_width=True
+)
+
+st.subheader("2. Patient Age Distribution")
+
+st.image(
+    "patient_age_distribution.png",
+    caption="Distribution of Patient Ages",
+    use_container_width=True
+)
+
+
 
 
