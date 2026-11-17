@@ -18,7 +18,7 @@ model = load_model()
 preprocessor = model.named_steps["preprocessing"]
 numeric_features = []
 
-for name, transformer, columns in preprocessing.transformers_:
+for name, transformer, columns in preprocessor.transformers_:
     if name == "num":
         numeric_features = list(columns)
 
