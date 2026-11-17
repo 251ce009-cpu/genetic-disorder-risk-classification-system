@@ -2,6 +2,7 @@
 import streamlit as st
 import pandas as pd
 import joblib
+import json
 
 st.set_page_config(
     page_title="Genetic Disorder Risk Classification",
@@ -74,5 +75,38 @@ if submitted:
     st.info("Educational prototype only. Not a medical diagnosis.")
 
 st.caption("Genetic Disorder Risk Classification System")
+
+# MODEL PERFORMANCE DASHBOARD
+
+st.divider()
+
+st.header("📊 Model Performance Dashboard")
+
+with open("model_evaluation.json", "r") as file:
+    evaluation = json.load(file)
+
+col1, col2, col3, col4 = st.columns(4)
+
+col1.metric("Accuracy", f"{evaluation['accuracy']*100:.2f}%")
+col2.metric("Precision", f"{evaluation['precision']*100:.2f}%")
+col3.metric("Recall", f"{evaluation['recall']*100:.2f}%")
+col4.metric("F1 Score", f"{evaluation['f1_score']*100:.2f}%")
+
+st.subheader("Confusion Matrix")
+
+class_names = evaluation["class_names"]
+
+confusion_df = pd.DataFrame(
+    evaluation["confusion_matrix"],
+    index=class_names,
+    columns=class_names
+)
+
+st.dataframe(confusion_df)
+
+st.caption(
+    "Evaluation metrics are calculated using the test dataset."
+)
+
 
 
