@@ -107,6 +107,29 @@ st.dataframe(confusion_df)
 st.caption(
     "Evaluation metrics are calculated using the test dataset."
 )
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+st.subheader("Confusion Matrix Visualization")
+
+fig, ax = plt.subplots(figsize=(8, 5))
+
+sns.heatmap(
+    confusion_df,
+    annot=True,
+    fmt="d",
+    cmap="Blues",
+    xticklabels=class_names,
+    yticklabels=class_names,
+    ax=ax
+)
+
+plt.xlabel("Predicted Label")
+plt.ylabel("Actual Label")
+plt.title("Genetic Disorder Confusion Matrix")
+
+st.pyplot(fig)
+plt.close(fig)
 
 # EDA VISUALIZATIONS
 
