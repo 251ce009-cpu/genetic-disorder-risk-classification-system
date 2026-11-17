@@ -66,4 +66,4 @@ The model is evaluated using:
 The model has limited classification performance and may produce incorrect predictions. It is an educational prototype and must not be used for medical diagnosis or treatment decisions.
 
 ## 10. Conclusion
-The project demonstrates how Machine Learning can be applied to genetic disorder risk classification. It combines data preprocessing, Logistic Regression, model evaluation, Flask API development
+The project demonstrates how Machine Learning can be applied to genetic disorder risk classification. It combines data preprocessing, Logistic Regression, model evaluation, Flask API development and Streamlit deployment in one application.
