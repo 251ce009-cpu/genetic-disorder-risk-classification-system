@@ -1,9 +1,11 @@
-
+flask
+flask-cors
 streamlit
 pandas
 numpy==2.4.6
 scikit-learn==1.6.1
 joblib==1.6.0
+requests
 matplotlib
 seaborn
 
