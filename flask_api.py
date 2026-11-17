@@ -3,28 +3,49 @@ from flask import Flask, request, jsonify
 from flask_cors import CORS
 import pandas as pd
 import joblib
+import os
 
 app = Flask(__name__)
 CORS(app)
 
-model = joblib.load("svm_model.pkl")
+model = joblib.load("genetic_disorder_model.pkl")
+feature_columns = model.feature_names_in_.tolist()
 
-@app.route("/")
+@app.route("/", methods=["GET"])
 def home():
-    return "Genetic Disorder Prediction API is Running!"
+    return jsonify({
+        "message": "Genetic Disorder Risk Classification API is running"
+    })
 
 @app.route("/predict", methods=["POST"])
 def predict():
+    try:
+        data = request.get_json()
 
-    data = request.get_json()
+        if not isinstance(data, dict):
+            return jsonify({"error": "Invalid patient data"}), 400
 
-    input_data = pd.DataFrame(data)
+        input_df = pd.DataFrame([data])
+        input_df = input_df.reindex(columns=feature_columns)
 
-    prediction = model.predict(input_data)
+        prediction = model.predict(input_df)[0]
+        probabilities = model.predict_proba(input_df)[0]
 
-    return jsonify({
-        "Predicted Disorder Subclass": prediction.tolist()
-    })
+        results = {
+            str(label): round(float(probability), 4)
+            for label, probability in zip(model.classes_, probabilities)
+        }
+
+        return jsonify({
+            "Predicted Genetic Disorder": str(prediction),
+            "Prediction Probabilities": results,
+            "Note": "Educational prototype only. Not a medical diagnosis."
+        })
+
+    except Exception as e:
+        return jsonify({"error": str(e)}), 400
+
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5000)
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host="0.0.0.0", port=port)
